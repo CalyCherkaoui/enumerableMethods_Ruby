@@ -86,7 +86,7 @@ def my_all? (array)
       status_cumulator = status_cumulator && (yield i)
       i += 1
   end
-  puts status_cumulator
+  puts "my_all #{status_cumulator}"
 end
 
 my_all? (test_array) do |indx|
@@ -106,7 +106,7 @@ def my_any? (array)
       status_cumulator = status_cumulator || (yield i)
       i += 1
   end
-  puts status_cumulator
+  puts "my_any #{status_cumulator}"
 end
 
 my_any? (test_array) do |indx|
@@ -126,5 +126,13 @@ def my_none? (array)
       status_cumulator = status_cumulator && (yield i)
       i += 1
   end
-  puts !status_cumulator
+  puts "my_none #{!status_cumulator}"
+end
+
+my_none? (test_array) do |indx|
+  if test_array[indx] > 20
+    true
+  else
+    false
+  end
 end
