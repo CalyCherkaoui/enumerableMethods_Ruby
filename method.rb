@@ -57,4 +57,22 @@ end
 
 # -----my_select_with_index method-----
 
-# def my_select_with_index (array)
+def my_select_with_index (array)
+  output_array = []
+  i = 0
+  while i < array.length
+    if (yield i) == true
+      output_array << i
+    end
+    i += 1
+  end
+  puts "my_select_with_index #{output_array}"
+end
+
+my_select_with_index (test_array) do |indx|
+  if test_array[indx] % 2 == 0
+    true
+  else
+    false
+  end
+end
