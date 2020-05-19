@@ -27,3 +27,17 @@ my_each_with_index (test_array) do |item , inx|
   item = inx * 2
   puts item
 end
+
+def my_select (array)
+  returned_array = []
+  condition = yield
+  i = 0
+  while i < array.length
+    if condition
+      returned_array << array[i]
+    end
+    i += 1
+  end
+  return returned_array
+end
+
