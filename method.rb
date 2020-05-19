@@ -23,7 +23,7 @@ def my_each_with_index (array)
   return array
 end
 
-# my_each_with_index (test_array) do |item , inx|
-#   item = inx * 2
-#   puts item
-# end
+my_each_with_index (test_array) do |item , inx|
+  item = inx * 2
+  puts item
+end
