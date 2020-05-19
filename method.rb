@@ -83,10 +83,10 @@ def my_all? (array)
   status_cumulator = true
   i = 0
   while i < array.length
-      x = ( status_cumulator && (yield i) )
-      status_cumulator = x
+      status_cumulator = status_cumulator && (yield i)
+      i += 1
   end
-  print status_cumulator
+  puts status_cumulator
 end
 
 my_all? (test_array) do |indx|
