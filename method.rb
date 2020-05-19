@@ -1,32 +1,39 @@
-# def my_each (array)
-#   i = 0
-#   while i < array.length
-#     yield array[i]
-#     i += 1
-#   end
-#   return array
-# end
-
 test_array = (1...7).to_a
+# p test_array.select {|x| x > 3}
 # print test_array
 
-# my_each (test_array) do |item|
-#   print item
-# end
+# -----my_each method-----
 
-# def my_each_with_index (array)
-#   i = 0
-#   while i < array.length
-#     yield array[i] , i
-#     i += 1
-#   end
-#   return array
-# end
+def my_each (array)
+  i = 0
+  while i < array.length
+    yield array[i]
+    i += 1
+  end
+  array
+end
 
-# my_each_with_index (test_array) do |item , inx|
-#   item = inx * 2
-#   puts item
-# end
+my_each (test_array) do |item|
+  puts "my_each #{item}"
+end
+
+# -----my_each_with_index method-----
+
+def my_each_with_index (array)
+  i = 0
+  while i < array.length
+    yield array[i] , i
+    i += 1
+  end
+  return array
+end
+
+my_each_with_index (test_array) do |item , inx|
+  item = inx * 2
+  puts "my_each_with_index #{item}"
+end
+
+# -----my_select method-----
 
 def my_select (array)
   output_array = []
@@ -37,14 +44,17 @@ def my_select (array)
     end
     i += 1
   end
-  output_array
+  puts "my_select #{output_array}"
 end
 
 my_select (test_array) do |indx|
   if test_array[indx] % 2 == 0
-    print indx
     true
   else
     false
   end
 end
+
+# -----my_select_with_index method-----
+
+# def my_select_with_index (array)
