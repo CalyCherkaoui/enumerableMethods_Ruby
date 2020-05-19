@@ -77,4 +77,23 @@ my_select_with_index (test_array) do |indx|
   end
 end
 
-# -----my_select_with_index method-----
+# -----my_all? method-----
+
+def my_all? (array)
+  status_cumulator = true
+  i = 0
+  while i < array.length
+      x = ( status_cumulator && (yield i) )
+      status_cumulator = x
+  end
+  print status_cumulator
+end
+
+my_all? (test_array) do |indx|
+  if test_array[indx] > 20
+    true
+  else
+    false
+  end
+end
+
