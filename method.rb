@@ -108,3 +108,11 @@ def my_any? (array)
   end
   puts status_cumulator
 end
+
+my_any? (test_array) do |indx|
+  if test_array[indx] >= 6
+    true
+  else
+    false
+  end
+end
