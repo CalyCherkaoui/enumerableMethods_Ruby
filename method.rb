@@ -116,3 +116,15 @@ my_any? (test_array) do |indx|
     false
   end
 end
+
+# -----my_none? method-----
+
+def my_none? (array)
+  status_cumulator = true
+  i = 0
+  while i < array.length
+      status_cumulator = status_cumulator && (yield i)
+      i += 1
+  end
+  puts !status_cumulator
+end
