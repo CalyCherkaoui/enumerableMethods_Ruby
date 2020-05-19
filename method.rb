@@ -29,22 +29,22 @@ test_array = (1...7).to_a
 # end
 
 def my_select (array)
-  returned_array = []
+  output_array = []
   i = 0
   while i < array.length
-    condition = yield i
-    if condition
-      returned_array << array[i]
+    if (yield i) == true
+      output_array << array[i]
     end
     i += 1
   end
-  return returned_array
+  output_array
 end
 
 my_select (test_array) do |indx|
-  return true if test_array[indx].even?
+  if test_array[indx] % 2 == 0
+    print indx
+    true
+  else
+    false
+  end
 end
-
-puts my_select (test_array)
-
-
