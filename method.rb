@@ -97,3 +97,14 @@ my_all? (test_array) do |indx|
   end
 end
 
+# -----my_any? method-----
+
+def my_any? (array)
+  status_cumulator = false
+  i = 0
+  while i < array.length
+      status_cumulator = status_cumulator || (yield i)
+      i += 1
+  end
+  puts status_cumulator
+end
