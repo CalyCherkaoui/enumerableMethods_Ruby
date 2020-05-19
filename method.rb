@@ -70,9 +70,11 @@ def my_select_with_index (array)
 end
 
 my_select_with_index (test_array) do |indx|
-  if test_array[indx] % 2 == 0
+  if test_array[indx] > 3
     true
   else
     false
   end
 end
+
+# -----my_select_with_index method-----
