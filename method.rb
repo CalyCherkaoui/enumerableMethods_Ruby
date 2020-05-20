@@ -26,7 +26,7 @@ module Enumerable
       end
       i += 1
     end
-    puts "my_select #{output_array}"
+    output_array
   end
 
   def my_select_with_index (array)
@@ -38,17 +38,18 @@ module Enumerable
       end
       i += 1
     end
-    puts "my_select_with_index #{output_array}"
+    output_array
   end
 
   def my_all? (array)
     status_cumulator = true
     i = 0
-    while i < array.length
-        status_cumulator = status_cumulator && (yield i)
-        i += 1
+    loop do
+      status_cumulator = status_cumulator && (yield i)
+      i += 1
+      break if (i == array.length || status_cumulator == false )
     end
-    puts "my_all #{status_cumulator}"
+    status_cumulator
   end
 
   def my_any? (array)
@@ -58,7 +59,7 @@ module Enumerable
         status_cumulator = status_cumulator || (yield i)
         i += 1
     end
-    puts "my_any #{status_cumulator}"
+    status_cumulator
   end
 
   def my_none? (array)
@@ -68,7 +69,7 @@ module Enumerable
         status_cumulator = status_cumulator && (yield i)
         i += 1
     end
-    puts "my_none #{!status_cumulator}"
+    !status_cumulator
   end
 
 end
@@ -91,27 +92,29 @@ end
 
 # -----my_select method-----
 
-my_select (test_array) do |indx|
+x = my_select (test_array) do |indx|
   if test_array[indx] % 2 == 0
     true
   else
     false
   end
 end
+puts "my_select result is : #{x}"
 
 # -----my_select_with_index method-----
 
-my_select_with_index (test_array) do |indx|
+x = my_select_with_index (test_array) do |indx|
   if test_array[indx] > 3
     true
   else
     false
   end
 end
+puts "my_select_with_index result is : #{x}"
 
 # -----my_all? method-----
 
-my_all? (test_array) do |indx|
+x = my_all? (test_array) do |indx|
   if test_array[indx] > 20
     true
   else
@@ -119,9 +122,11 @@ my_all? (test_array) do |indx|
   end
 end
 
+puts "my_all result is : #{x}"
+
 # -----my_any? method-----
 
-my_any? (test_array) do |indx|
+x = my_any? (test_array) do |indx|
   if test_array[indx] >= 6
     true
   else
@@ -129,12 +134,16 @@ my_any? (test_array) do |indx|
   end
 end
 
+puts "my_any? result is : #{x}"
+
 # -----my_none? method-----
 
-my_none? (test_array) do |indx|
+x = my_none? (test_array) do |indx|
   if test_array[indx] > 20
     true
   else
     false
   end
 end
+
+puts "my_none? result is : #{x}"
