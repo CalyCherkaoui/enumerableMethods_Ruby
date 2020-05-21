@@ -105,6 +105,13 @@ module Enumerable
 
   def my_inject
     return "no block given" unless block_given?
+    cumulator = self[0]
+    i = 1
+    while i < self.length
+      cumulator = yield cumulator , self[i]
+      i += 1
+    end
+    cumulator
   end
 
 end
@@ -120,8 +127,8 @@ end
 
 # -----Testing my_each_with_index method-----
 
-test_array.my_each_with_index do |item , inx|
-  item = inx * 2
+test_array.my_each_with_index do |item , indx|
+  item = indx % 3
   puts "my_each_with_index #{item}"
 end
 
@@ -193,10 +200,18 @@ end
 
 puts "my_count result is : #{x}"
 
-# -----Testing my_count method-----
+# -----Testing my_map method-----
 
 x = test_array.my_map do |item|
   (item * 10)
 end
 
 puts "my_map result is : #{x}"
+
+# -----Testing my_inject method-----
+
+x = test_array.my_inject do | m , n |
+  (m * n)
+end
+
+puts "my_inject result is : #{x}"
