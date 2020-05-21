@@ -10,6 +10,7 @@ module Enumerable
   end
 
   def my_each_with_index
+    return "no block given" unless block_given?
     i = 0
     while i < self.length
       yield self[i] , i
@@ -19,6 +20,7 @@ module Enumerable
   end
 
   def my_select
+    return "no block given" unless block_given?
     output_array = []
     i = 0
     while i < self.length
@@ -31,6 +33,7 @@ module Enumerable
   end
 
   def my_select_with_index
+    return "no block given" unless block_given?
     output_array = []
     i = 0
     while i < self.length
@@ -43,6 +46,7 @@ module Enumerable
   end
 
   def my_all?
+    return "no block given" unless block_given?
     status_cumulator = true
     i = 0
     loop do
@@ -54,6 +58,7 @@ module Enumerable
   end
 
   def my_any?
+    return "no block given" unless block_given?
     status_cumulator = false
     i = 0
     loop do
@@ -65,6 +70,7 @@ module Enumerable
   end
 
   def my_none?
+    return "no block given" unless block_given?
     status_cumulator = true
     i = 0
     loop do
