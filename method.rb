@@ -224,6 +224,7 @@ end
 
 puts "my_inject result is : #{x}"
 
+# -----Testing my_inject method with multiply_els method---
 # -----Testing my_map_with_proc method-----
 
 test_proc= Proc.new { |item| item * 10 }
