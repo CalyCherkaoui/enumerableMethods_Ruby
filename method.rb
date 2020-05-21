@@ -1,20 +1,21 @@
 module Enumerable
-  def my_each (array)
+  def my_each
+    #return "no block given" unless block_given?
     i = 0
-    while i < array.length
-      yield array[i]
+    while i < self.length
+      yield self[i]
       i += 1
     end
-    array
+    self
   end
 
-  def my_each_with_index (array)
+  def my_each_with_index
     i = 0
-    while i < array.length
-      yield array[i] , i
+    while i < self.length
+      yield self[i] , i
       i += 1
     end
-    return array
+    return self
   end
 
   def my_select (array)
@@ -55,9 +56,10 @@ module Enumerable
   def my_any? (array)
     status_cumulator = false
     i = 0
-    while i < array.length
-        status_cumulator = status_cumulator || (yield i)
-        i += 1
+    loop do
+      status_cumulator = status_cumulator || (yield i)
+      i += 1
+      break if (i == array.length || status_cumulator == true )
     end
     status_cumulator
   end
@@ -65,12 +67,24 @@ module Enumerable
   def my_none? (array)
     status_cumulator = true
     i = 0
-    while i < array.length
-        status_cumulator = status_cumulator && (yield i)
-        i += 1
+    loop do
+      status_cumulator = status_cumulator && (yield i)
+      i += 1
+      break if (i == array.length || status_cumulator == false )
     end
     !status_cumulator
   end
+
+  # def my_count (array)
+  #   counter = 0
+  #   i = 0
+  #   while i < array.length
+  #     if yield i
+  #       counter += 1
+  #     end
+  #   end
+  #   counter
+  # end
 
 end
 
@@ -78,19 +92,20 @@ include Enumerable
 
 test_array = (1...7).to_a
 
-# -----my_each method-----
-my_each (test_array) do |item|
+# -----Testing my_each method-----
+
+test_array.my_each do |item|
   puts "my_each #{item}"
 end
 
-# -----my_each_with_index method-----
+# -----Testing my_each_with_index method-----
 
-my_each_with_index (test_array) do |item , inx|
+test_array.my_each_with_index do |item , inx|
   item = inx * 2
   puts "my_each_with_index #{item}"
 end
 
-# -----my_select method-----
+# -----Testing my_select method-----
 
 x = my_select (test_array) do |indx|
   if test_array[indx] % 2 == 0
@@ -101,7 +116,7 @@ x = my_select (test_array) do |indx|
 end
 puts "my_select result is : #{x}"
 
-# -----my_select_with_index method-----
+# -----Testing my_select_with_index method-----
 
 x = my_select_with_index (test_array) do |indx|
   if test_array[indx] > 3
@@ -112,7 +127,7 @@ x = my_select_with_index (test_array) do |indx|
 end
 puts "my_select_with_index result is : #{x}"
 
-# -----my_all? method-----
+# -----Testing my_all? method-----
 
 x = my_all? (test_array) do |indx|
   if test_array[indx] > 20
@@ -121,10 +136,9 @@ x = my_all? (test_array) do |indx|
     false
   end
 end
-
 puts "my_all result is : #{x}"
 
-# -----my_any? method-----
+# -----Testing my_any? method-----
 
 x = my_any? (test_array) do |indx|
   if test_array[indx] >= 6
@@ -136,7 +150,7 @@ end
 
 puts "my_any? result is : #{x}"
 
-# -----my_none? method-----
+# -----Testing my_none? method-----
 
 x = my_none? (test_array) do |indx|
   if test_array[indx] > 20
@@ -145,5 +159,16 @@ x = my_none? (test_array) do |indx|
     false
   end
 end
-
 puts "my_none? result is : #{x}"
+
+# -----Testing my_count method-----
+
+# x = my_count (test_array) do |indx|
+#   if test_array[indx] < 2
+#     true
+#   else
+#     false
+#   end
+# end
+
+# puts "my_count result is : #{x}"
