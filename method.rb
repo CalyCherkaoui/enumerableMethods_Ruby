@@ -1,6 +1,6 @@
 module Enumerable
   def my_each
-    #return "no block given" unless block_given?
+    return "no block given" unless block_given?
     i = 0
     while i < self.length
       yield self[i]
@@ -18,22 +18,22 @@ module Enumerable
     return self
   end
 
-  def my_select (array)
+  def my_select
     output_array = []
     i = 0
-    while i < array.length
+    while i < self.length
       if (yield i) == true
-        output_array << array[i]
+        output_array << self[i]
       end
       i += 1
     end
     output_array
   end
 
-  def my_select_with_index (array)
+  def my_select_with_index
     output_array = []
     i = 0
-    while i < array.length
+    while i < self.length
       if (yield i) == true
         output_array << i
       end
@@ -42,35 +42,35 @@ module Enumerable
     output_array
   end
 
-  def my_all? (array)
+  def my_all?
     status_cumulator = true
     i = 0
     loop do
       status_cumulator = status_cumulator && (yield i)
       i += 1
-      break if (i == array.length || status_cumulator == false )
+      break if (i == self.length || status_cumulator == false )
     end
     status_cumulator
   end
 
-  def my_any? (array)
+  def my_any?
     status_cumulator = false
     i = 0
     loop do
       status_cumulator = status_cumulator || (yield i)
       i += 1
-      break if (i == array.length || status_cumulator == true )
+      break if (i == self.length || status_cumulator == true )
     end
     status_cumulator
   end
 
-  def my_none? (array)
+  def my_none?
     status_cumulator = true
     i = 0
     loop do
       status_cumulator = status_cumulator && (yield i)
       i += 1
-      break if (i == array.length || status_cumulator == false )
+      break if (i == self.length || status_cumulator == false )
     end
     !status_cumulator
   end
@@ -107,7 +107,7 @@ end
 
 # -----Testing my_select method-----
 
-x = my_select (test_array) do |indx|
+x = test_array.my_select do |indx|
   if test_array[indx] % 2 == 0
     true
   else
@@ -118,7 +118,7 @@ puts "my_select result is : #{x}"
 
 # -----Testing my_select_with_index method-----
 
-x = my_select_with_index (test_array) do |indx|
+x = test_array.my_select_with_index do |indx|
   if test_array[indx] > 3
     true
   else
@@ -129,7 +129,7 @@ puts "my_select_with_index result is : #{x}"
 
 # -----Testing my_all? method-----
 
-x = my_all? (test_array) do |indx|
+x = test_array.my_all? do |indx|
   if test_array[indx] > 20
     true
   else
@@ -140,7 +140,7 @@ puts "my_all result is : #{x}"
 
 # -----Testing my_any? method-----
 
-x = my_any? (test_array) do |indx|
+x = test_array.my_any? do |indx|
   if test_array[indx] >= 6
     true
   else
@@ -152,7 +152,7 @@ puts "my_any? result is : #{x}"
 
 # -----Testing my_none? method-----
 
-x = my_none? (test_array) do |indx|
+x = test_array.my_none? do |indx|
   if test_array[indx] > 20
     true
   else
