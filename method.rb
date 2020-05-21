@@ -103,6 +103,10 @@ module Enumerable
     output_array
   end
 
+  def my_inject
+    return "no block given" unless block_given?
+  end
+
 end
 
 
@@ -188,6 +192,8 @@ x = test_array.my_count do |item|
 end
 
 puts "my_count result is : #{x}"
+
+# -----Testing my_count method-----
 
 x = test_array.my_map do |item|
   (item * 10)
