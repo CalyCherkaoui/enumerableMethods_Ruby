@@ -81,16 +81,18 @@ module Enumerable
     !status_cumulator
   end
 
-  # def my_count (array)
-  #   counter = 0
-  #   i = 0
-  #   while i < array.length
-  #     if yield i
-  #       counter += 1
-  #     end
-  #   end
-  #   counter
-  # end
+  def my_count
+    return self.size unless block_given?
+    counter = 0
+    i = 0
+    while i < self.size
+      if (yield self[i])
+        counter += 1
+      end
+      i += 1
+    end
+    counter
+  end
 
 end
 
@@ -169,12 +171,12 @@ puts "my_none? result is : #{x}"
 
 # -----Testing my_count method-----
 
-# x = my_count (test_array) do |indx|
-#   if test_array[indx] < 2
-#     true
-#   else
-#     false
-#   end
-# end
+x = test_array.my_count do |item|
+  if item < 2
+    true
+  else
+    false
+  end
+end
 
-# puts "my_count result is : #{x}"
+puts "my_count result is : #{x}"
