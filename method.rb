@@ -114,10 +114,18 @@ module Enumerable
     cumulator
   end
 
+  def my_map_with_proc (&proc)
+    output_array = []
+    self.my_each do |elem|
+      output_array << proc.call(elem)
+    end
+    output_array
+  end
+
 end
 
 
-test_array = (1...7).to_a
+test_array = (3...7).to_a
 
 # -----Testing my_each method-----
 
@@ -215,3 +223,9 @@ x = test_array.my_inject do | m , n |
 end
 
 puts "my_inject result is : #{x}"
+
+# -----Testing my_map_with_proc method-----
+
+test_proc= Proc.new { |item| item * 10 }
+x = test_array.my_map_with_proc(&test_proc)
+puts "my_map_with_proc result is : #{x}"
