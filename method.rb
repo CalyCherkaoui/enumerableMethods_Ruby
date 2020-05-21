@@ -94,9 +94,17 @@ module Enumerable
     counter
   end
 
+  def my_map
+    return "no block given" unless block_given?
+    output_array = []
+    self.my_each do |elem|
+      output_array << (yield elem)
+    end
+    output_array
+  end
+
 end
 
-include Enumerable
 
 test_array = (1...7).to_a
 
@@ -180,3 +188,9 @@ x = test_array.my_count do |item|
 end
 
 puts "my_count result is : #{x}"
+
+x = test_array.my_map do |item|
+  (item * 10)
+end
+
+puts "my_map result is : #{x}"
