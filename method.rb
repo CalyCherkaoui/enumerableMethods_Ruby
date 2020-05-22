@@ -33,18 +33,6 @@ module Enumerable
     output_array
   end
 
-  def my_select_with_index
-    return 'no block given' unless block_given?
-
-    output_array = []
-    i = 0
-    while i < length
-      output_array << i if (yield i) == true
-      i += 1
-    end
-    output_array
-  end
-
   def my_all?
     return 'no block given' unless block_given?
 
@@ -138,7 +126,7 @@ end
 # -----Testing my_each_with_index method-----
 
 test_array.my_each_with_index do |item, indx|
-  item = indx % 3
+  item << indx % 3
   puts "my_each_with_index #{item}"
 end
 
