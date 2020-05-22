@@ -3,7 +3,7 @@ module Enumerable
     return 'no block given' unless block_given?
 
     i = 0
-    while i < self.length
+    while i < length
       yield self[i]
       i += 1
     end
@@ -14,11 +14,11 @@ module Enumerable
     return 'no block given' unless block_given?
 
     i = 0
-    while i < self.length
+    while i < length
       yield self[i], i
       i += 1
     end
-    return self
+    self
   end
 
   def my_select
@@ -26,10 +26,8 @@ module Enumerable
 
     output_array = []
     i = 0
-    while i < self.length
-      if (yield i) == true
-        output_array << self[i]
-      end
+    while i < length
+      output_array << self[i] if (yield i) == true
       i += 1
     end
     output_array
@@ -40,10 +38,8 @@ module Enumerable
 
     output_array = []
     i = 0
-    while i < self.length
-      if (yield i) == true
-        output_array << i
-      end
+    while i < length
+      output_array << i if (yield i) == true
       i += 1
     end
     output_array
@@ -57,7 +53,7 @@ module Enumerable
     loop do
       status_cumulator &&= yield i
       i += 1
-      break if i == self.length || status_cumulator == false
+      break if i == length || status_cumulator == false
     end
     status_cumulator
   end
@@ -70,7 +66,7 @@ module Enumerable
     loop do
       status_cumulator ||= yield i
       i += 1
-      break if i == self.length || status_cumulator == true
+      break if i == length || status_cumulator == true
     end
     status_cumulator
   end
@@ -83,17 +79,17 @@ module Enumerable
     loop do
       status_cumulator &&= yield i
       i += 1
-      break if i == self.length || status_cumulator == false
+      break if i == length || status_cumulator == false
     end
     !status_cumulator
   end
 
   def my_count
-    return self.size unless block_given?
+    return size unless block_given?
 
     counter = 0
     i = 0
-    while i < self.size
+    while i < size
       counter += 1 if yield self[i]
       i += 1
     end
@@ -104,7 +100,7 @@ module Enumerable
     return 'no block given' unless block_given?
 
     output_array = []
-    self.my_each do |elem|
+    my_each do |elem|
       output_array << (yield elem)
     end
     output_array
@@ -115,7 +111,7 @@ module Enumerable
 
     cumulator = self[0]
     i = 1
-    while i < self.length
+    while i < length
       cumulator = yield cumulator, self[i]
       i += 1
     end
@@ -124,7 +120,7 @@ module Enumerable
 
   def my_map_with_proc(&proc)
     output_array = []
-    self.my_each do |elem|
+    my_each do |elem|
       output_array << proc.call(elem)
     end
     output_array
@@ -149,45 +145,28 @@ end
 # -----Testing my_select method-----
 
 x = test_array.my_select do |indx|
-  # if test_array[indx] % 2 == 0
-  if (test_array[indx] % 2).zero?
-    true
-  else
-    false
-  end
+  (test_array[indx] % 2).zero?
 end
 puts "my_select result is : #{x}"
 
 # -----Testing my_select_with_index method-----
 
 x = test_array.my_select_with_index do |indx|
-  if test_array[indx] > 3
-    true
-  else
-    false
-  end
+  test_array[indx] > 3
 end
 puts "my_select_with_index result is : #{x}"
 
 # -----Testing my_all? method-----
 
 x = test_array.my_all? do |indx|
-  if test_array[indx] > 20
-    true
-  else
-    false
-  end
+  test_array[indx] > 20
 end
 puts "my_all result is : #{x}"
 
 # -----Testing my_any? method-----
 
 x = test_array.my_any? do |indx|
-  if test_array[indx] >= 6
-    true
-  else
-    false
-  end
+  test_array[indx] >= 6
 end
 
 puts "my_any? result is : #{x}"
@@ -195,17 +174,13 @@ puts "my_any? result is : #{x}"
 # -----Testing my_none? method-----
 
 x = test_array.my_none? do |indx|
-  if test_array[indx] > 20
-    true
-  else
-    false
-  end
+  test_array[indx] > 20
 end
 puts "my_none? result is : #{x}"
 
 # -----Testing my_count method-----
 
-x = test_array.my_count { |item| item < 2 ? true : false }
+x = test_array.my_count { |item| item < 2 }
 
 puts "my_count result is : #{x}"
 
