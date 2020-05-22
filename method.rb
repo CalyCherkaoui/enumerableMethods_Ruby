@@ -1,6 +1,7 @@
 module Enumerable
   def my_each
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     i = 0
     while i < self.length
       yield self[i]
@@ -10,17 +11,19 @@ module Enumerable
   end
 
   def my_each_with_index
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     i = 0
     while i < self.length
-      yield self[i] , i
+      yield self[i], i
       i += 1
     end
     return self
   end
 
   def my_select
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     output_array = []
     i = 0
     while i < self.length
@@ -33,7 +36,8 @@ module Enumerable
   end
 
   def my_select_with_index
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     output_array = []
     i = 0
     while i < self.length
@@ -46,56 +50,59 @@ module Enumerable
   end
 
   def my_all?
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     status_cumulator = true
     i = 0
     loop do
-      status_cumulator = status_cumulator && (yield i)
+      status_cumulator &&= yield i
       i += 1
-      break if (i == self.length || status_cumulator == false )
+      break if i == self.length || status_cumulator == false
     end
     status_cumulator
   end
 
   def my_any?
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     status_cumulator = false
     i = 0
     loop do
-      status_cumulator = status_cumulator || (yield i)
+      status_cumulator ||= yield i
       i += 1
-      break if (i == self.length || status_cumulator == true )
+      break if i == self.length || status_cumulator == true
     end
     status_cumulator
   end
 
   def my_none?
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     status_cumulator = true
     i = 0
     loop do
-      status_cumulator = status_cumulator && (yield i)
+      status_cumulator &&= yield i
       i += 1
-      break if (i == self.length || status_cumulator == false )
+      break if i == self.length || status_cumulator == false
     end
     !status_cumulator
   end
 
   def my_count
     return self.size unless block_given?
+
     counter = 0
     i = 0
     while i < self.size
-      if (yield self[i])
-        counter += 1
-      end
+      counter += 1 if yield self[i]
       i += 1
     end
     counter
   end
 
   def my_map
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     output_array = []
     self.my_each do |elem|
       output_array << (yield elem)
@@ -104,26 +111,25 @@ module Enumerable
   end
 
   def my_inject
-    return "no block given" unless block_given?
+    return 'no block given' unless block_given?
+
     cumulator = self[0]
     i = 1
     while i < self.length
-      cumulator = yield cumulator , self[i]
+      cumulator = yield cumulator, self[i]
       i += 1
     end
     cumulator
   end
 
-  def my_map_with_proc (&proc)
+  def my_map_with_proc(&proc)
     output_array = []
     self.my_each do |elem|
       output_array << proc.call(elem)
     end
     output_array
   end
-
 end
-
 
 test_array = (3...7).to_a
 
@@ -135,7 +141,7 @@ end
 
 # -----Testing my_each_with_index method-----
 
-test_array.my_each_with_index do |item , indx|
+test_array.my_each_with_index do |item, indx|
   item = indx % 3
   puts "my_each_with_index #{item}"
 end
@@ -143,7 +149,8 @@ end
 # -----Testing my_select method-----
 
 x = test_array.my_select do |indx|
-  if test_array[indx] % 2 == 0
+  # if test_array[indx] % 2 == 0
+  if (test_array[indx] % 2).zero?
     true
   else
     false
@@ -198,13 +205,7 @@ puts "my_none? result is : #{x}"
 
 # -----Testing my_count method-----
 
-x = test_array.my_count do |item|
-  if item < 2
-    true
-  else
-    false
-  end
-end
+x = test_array.my_count { |item| item < 2 ? true : false }
 
 puts "my_count result is : #{x}"
 
@@ -218,7 +219,7 @@ puts "my_map result is : #{x}"
 
 # -----Testing my_inject method-----
 
-x = test_array.my_inject do | m , n |
+x = test_array.my_inject do |m, n|
   (m * n)
 end
 
@@ -227,6 +228,6 @@ puts "my_inject result is : #{x}"
 # -----Testing my_inject method with multiply_els method---
 # -----Testing my_map_with_proc method-----
 
-test_proc= Proc.new { |item| item * 10 }
+test_proc = proc { |item| item * 10 }
 x = test_array.my_map_with_proc(&test_proc)
 puts "my_map_with_proc result is : #{x}"
