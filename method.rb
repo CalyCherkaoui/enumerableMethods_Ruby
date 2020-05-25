@@ -84,16 +84,6 @@ module Enumerable
     counter
   end
 
-  # def my_map
-  #   return 'no block given' unless block_given?
-
-  #   output_array = []
-  #   my_each do |elem|
-  #     output_array << (yield elem)
-  #   end
-  #   output_array
-  # end
-
   def my_inject
     return 'no block given' unless block_given?
 
@@ -170,14 +160,6 @@ puts "my_none? result is : #{x}"
 x = test_array.my_count { |item| item < 2 }
 
 puts "my_count result is : #{x}"
-
-# -----Testing my_map method-----
-
-# x = test_array.my_map do |item|
-#   (item * 10)
-# end
-
-# puts "my_map result is : #{x}"
 
 # -----Testing my_inject method-----
 
