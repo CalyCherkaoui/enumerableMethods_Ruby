@@ -182,6 +182,14 @@ end
 puts "my_inject result is : #{x}"
 
 # -----Testing my_inject method with multiply_els method---
+
+def multiply_els (array)
+  array.my_inject do |m, n|
+    (m * n)
+  end
+end
+x = multiply_els (test_array)
+puts "Testing my_inject method with multiply_els method. The result is : #{x}"
 # -----Testing my_map_with_proc method-----
 
 test_proc = proc { |item| item * 10 }
