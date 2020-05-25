@@ -108,7 +108,7 @@ module Enumerable
 
   def my_map(&proc)
     output_array = []
-    if  block_given?
+    if block_given?
       my_each do |elem|
         output_array << (yield elem)
       end
@@ -119,7 +119,6 @@ module Enumerable
     end
     output_array
   end
-
 end
 
 test_array = (3...7).to_a
@@ -190,18 +189,18 @@ puts "my_inject result is : #{x}"
 
 # -----Testing my_inject method with multiply_els method---
 
-def multiply_els (array)
+def multiply_els(array)
   array.my_inject do |m, n|
     (m * n)
   end
 end
-x = multiply_els (test_array)
+x = multiply_els(test_array)
 puts "Testing my_inject method with multiply_els method. The result is : #{x}"
 
 # -----Testing my_map method-----
 x = test_array.my_map do |item|
-    (item * 10)
-  end
+  (item * 10)
+end
 puts "my_map result is : #{x}"
 
 test_proc = proc { |item| item * 20 }
