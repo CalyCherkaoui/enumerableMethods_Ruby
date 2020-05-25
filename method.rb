@@ -137,13 +137,6 @@ x = test_array.my_select do |indx|
 end
 puts "my_select result is : #{x}"
 
-# -----Testing my_select_with_index method-----
-
-x = test_array.my_select_with_index do |indx|
-  test_array[indx] > 3
-end
-puts "my_select_with_index result is : #{x}"
-
 # -----Testing my_all? method-----
 
 x = test_array.my_all? do |indx|
