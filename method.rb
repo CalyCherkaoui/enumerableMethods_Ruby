@@ -106,19 +106,20 @@ module Enumerable
     cumulator
   end
 
-  def my_map_with_proc(proc = nill)
+  def my_map(&proc)
     output_array = []
-    if proc
-      my_each do |elem|
-        output_array << proc.call(elem)
-      end
-    else 
+    if  block_given?
       my_each do |elem|
         output_array << (yield elem)
+      end
+    else
+      my_each do |elem|
+        output_array << proc.call(elem)
       end
     end
     output_array
   end
+
 end
 
 test_array = (3...7).to_a
@@ -196,8 +197,13 @@ def multiply_els (array)
 end
 x = multiply_els (test_array)
 puts "Testing my_inject method with multiply_els method. The result is : #{x}"
-# -----Testing my_map_with_proc method-----
 
-test_proc = proc { |item| item * 10 }
-x = test_array.my_map_with_proc(test_proc)
-puts "my_map_with_proc result is : #{x}"
+# -----Testing my_map method-----
+x = test_array.my_map do |item|
+    (item * 10)
+  end
+puts "my_map result is : #{x}"
+
+test_proc = proc { |item| item * 20 }
+x = test_array.my_map(&test_proc)
+puts "my_map with proc result is : #{x}"
