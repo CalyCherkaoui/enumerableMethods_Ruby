@@ -183,7 +183,7 @@ puts "Testing my_inject method with multiply_els method. The result is : #{x}"
 x = test_array.my_map do |item|
   (item * 10)
 end
-puts "my_map result is : #{x}"
+puts "my_map with block result is : #{x}"
 
 test_proc = proc { |item| item * 20 }
 x = test_array.my_map(&test_proc)
