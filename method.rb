@@ -1,6 +1,6 @@
 module Enumerable
   def my_each
-    return 'no block given' unless block_given?
+    return to_enum(:my_each) unless block_given?
 
     i = 0
     while i < size
@@ -11,7 +11,7 @@ module Enumerable
   end
 
   def my_each_with_index
-    return 'no block given' unless block_given?
+    return to_enum(:my_each_with_index) unless block_given?
 
     i = 0
     while i < size
@@ -22,7 +22,7 @@ module Enumerable
   end
 
   def my_select
-    return 'no block given' unless block_given?
+    return to_enum(:my_select) unless block_given?
 
     output_array = []
     i = 0
@@ -34,7 +34,7 @@ module Enumerable
   end
 
   def my_all?
-    return 'no block given' unless block_given?
+    return to_enum(:my_all?) unless block_given?
 
     status_cumulator = true
     i = 0
@@ -47,7 +47,7 @@ module Enumerable
   end
 
   def my_any?
-    return 'no block given' unless block_given?
+    return to_enum(:my_any?) unless block_given?
 
     status_cumulator = false
     i = 0
@@ -60,7 +60,7 @@ module Enumerable
   end
 
   def my_none?
-    return 'no block given' unless block_given?
+    return to_enum(:my_none?) unless block_given?
 
     status_cumulator = true
     i = 0
@@ -85,7 +85,7 @@ module Enumerable
   end
 
   def my_inject
-    return 'no block given' unless block_given?
+    return to_enum(:my_inject) unless block_given?
 
     cumulator = self[0]
     i = 1
