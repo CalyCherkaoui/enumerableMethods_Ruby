@@ -3,7 +3,7 @@ module Enumerable
     return 'no block given' unless block_given?
 
     i = 0
-    while i < length
+    while i < size
       yield self[i]
       i += 1
     end
@@ -14,7 +14,7 @@ module Enumerable
     return 'no block given' unless block_given?
 
     i = 0
-    while i < length
+    while i < size
       yield self[i], i
       i += 1
     end
@@ -26,7 +26,7 @@ module Enumerable
 
     output_array = []
     i = 0
-    while i < length
+    while i < size
       output_array << self[i] if (yield i) == true
       i += 1
     end
@@ -41,7 +41,7 @@ module Enumerable
     loop do
       status_cumulator &&= yield i
       i += 1
-      break if i == length || status_cumulator == false
+      break if i == size || status_cumulator == false
     end
     status_cumulator
   end
@@ -54,7 +54,7 @@ module Enumerable
     loop do
       status_cumulator ||= yield i
       i += 1
-      break if i == length || status_cumulator == true
+      break if i == size || status_cumulator == true
     end
     status_cumulator
   end
@@ -67,7 +67,7 @@ module Enumerable
     loop do
       status_cumulator &&= yield i
       i += 1
-      break if i == length || status_cumulator == false
+      break if i == size || status_cumulator == false
     end
     !status_cumulator
   end
@@ -89,7 +89,7 @@ module Enumerable
 
     cumulator = self[0]
     i = 1
-    while i < length
+    while i < size
       cumulator = yield cumulator, self[i]
       i += 1
     end
