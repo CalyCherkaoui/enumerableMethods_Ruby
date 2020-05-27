@@ -25,10 +25,8 @@ module Enumerable
     return to_enum(:my_select) unless block_given?
 
     output_array = []
-    i = 0
-    while i < size
-      output_array << self[i] if (yield i) == true
-      i += 1
+    my_each do |item|
+      output_array << item if ( yield item ) == true
     end
     output_array
   end

@@ -32,63 +32,61 @@ puts "my_each_with_index #{hash1}"
 
 # -----Testing my_select method-----
 
-x = test_array.my_select do |indx|
-  (test_array[indx] % 2).zero?
-end
-puts "my_select result is : #{x}"
+x = [1,2,3,4,5].my_select{|a| a.even? }
+puts "my_select result is : #{x} selecting the even values"
 
-# -----Testing my_all? method-----
+# # -----Testing my_all? method-----
 
-x = test_array.my_all? do |indx|
-  test_array[indx] > 20
-end
-puts "my_all result is : #{x}"
+# x = test_array.my_all? do |indx|
+#   test_array[indx] > 20
+# end
+# puts "my_all result is : #{x}"
 
-# -----Testing my_any? method-----
+# # -----Testing my_any? method-----
 
-x = test_array.my_any? do |indx|
-  test_array[indx] >= 6
-end
+# x = test_array.my_any? do |indx|
+#   test_array[indx] >= 6
+# end
 
-puts "my_any? result is : #{x}"
+# puts "my_any? result is : #{x}"
 
-# -----Testing my_none? method-----
+# # -----Testing my_none? method-----
 
-x = test_array.my_none? do |indx|
-  test_array[indx] > 20
-end
-puts "my_none? result is : #{x}"
+# x = test_array.my_none? do |indx|
+#   test_array[indx] > 20
+# end
+# puts "my_none? result is : #{x}"
 
-# -----Testing my_count method-----
+# # -----Testing my_count method-----
 
-x = test_array.my_count { |item| item < 2 }
+# x = test_array.my_count { |item| item < 2 }
 
-puts "my_count result is : #{x}"
+# puts "my_count result is : #{x}"
 
-# -----Testing my_inject method-----
+# # -----Testing my_inject method-----
 
-x = test_array.my_inject do |m, n|
-  (m * n)
-end
+# x = test_array.my_inject do |m, n|
+#   (m * n)
+# end
 
-puts "my_inject result is : #{x}"
+# puts "my_inject result is : #{x}"
 
-# -----Testing my_inject method with multiply_els method---
+# # -----Testing my_inject method with multiply_els method---
 
-def multiply_els(array)
-  array.my_inject do |m, n|
-    (m * n)
-  end
-end
-x = multiply_els(test_array)
-puts "Testing my_inject method with multiply_els method. The result is : #{x}"
+# def multiply_els(array)
+#   array.my_inject do |m, n|
+#     (m * n)
+#   end
+# end
+# x = multiply_els(test_array)
+# puts "Testing my_inject method with multiply_els method. The result is : #{x}"
 
-# -----Testing my_map method-----
-x = test_array.my_map do |item|
-  (item * 10)
-end
-puts "my_map with block result is : #{x}"
+# # -----Testing my_map method-----
+# x = test_array.my_map do |item|
+#   (item * 10)
+# end
+# puts "my_map with block result is : #{x}"
 
-test_proc = proc { |item| item * 20 }
-x = test_array.my_map(&test_proc)
-puts "my_map with proc result is : #{x}"
+# test_proc = proc { |item| item * 20 }
+# x = test_array.my_map(&test_proc)
+# puts "my_map with proc result is : #{x}"
