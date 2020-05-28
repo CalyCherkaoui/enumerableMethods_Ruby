@@ -64,7 +64,7 @@ module Enumerable
     status_cumulator = false
     i = 0
     loop do
-      status_cumulator ||= yield i
+      status_cumulator ||= yield self[i]
       i += 1
       break if i == size || status_cumulator == true
     end
@@ -77,23 +77,24 @@ module Enumerable
     status_cumulator = true
     i = 0
     loop do
-      status_cumulator &&= yield i
+      status_cumulator &&= yield self[i]
       i += 1
       break if i == size || status_cumulator == false
     end
     !status_cumulator
   end
 
-  def my_count
-    return size unless block_given?
-
+  def my_count(parameter = nil)
     counter = 0
-    i = 0
-    while i < size
-      counter += 1 if yield self[i]
-      i += 1
+    if parameter
+      my_each {|item| counter += 1 if item == parameter}
+      counter
+    elsif block_given?
+      my_each {|item| counter += 1 if yield item}
+      counter
+    else
+      size
     end
-    counter
   end
 
   def my_inject

@@ -44,29 +44,29 @@ test_array_b = [nil, false, true]
 
 # # -----Testing my_all? method-----
 
-x = test_array_s.my_all? { |word| word.length >= 3 }
-puts "my_all result is : #{x}"
+# x = test_array_s.my_all? { |word| word.length >= 3 }
+# puts "my_all result is : #{x}"
 
 # # -----Testing my_any? method-----
 
-# x = test_array.my_any? do |indx|
-#   test_array[indx] >= 6
-# end
-
+# x = test_array_s.my_any? { |word| word.length == 5 }
 # puts "my_any? result is : #{x}"
 
-# # -----Testing my_none? method-----
+# # # -----Testing my_none? method-----
 
-# x = test_array.my_none? do |indx|
-#   test_array[indx] > 20
-# end
+# x = test_array_s.my_none? { |word| word.length == 5 }
+# puts "my_none? result is : #{x}"
+
+# x = test_array_s.my_none? { |word| word.length >= 4 }
 # puts "my_none? result is : #{x}"
 
 # # -----Testing my_count method-----
 
-# x = test_array.my_count { |item| item < 2 }
+x = test_array_i.my_count { |item| item < 2 }
+puts "my_count with block result is : #{x}"
 
-# puts "my_count result is : #{x}"
+x = test_array_i.my_count(2)
+puts "my_count with argument result is : #{x}"
 
 # # -----Testing my_inject method-----
 
