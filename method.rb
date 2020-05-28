@@ -1,13 +1,20 @@
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
-
+    output_array = []
+    if self.is_a?(Array)
+      output_array = self
+    elsif
+      output_array = self.to_a
+    else
+      output_array << self
+    end
     i = 0
     while i < size
-      yield self[i]
+        yield output_array[i]
       i += 1
     end
-    self
+    output_array
   end
 
   def my_each_with_index
@@ -21,15 +28,22 @@ module Enumerable
     self
   end
 
-  def my_select
-    return to_enum(:my_select) unless block_given?
+  # def my_select
+  #   return to_enum(:my_select) unless block_given?
 
-    output_array = []
-    my_each do |item|
-      output_array << item if ( yield item ) == true
-    end
-    output_array
-  end
+  #   if self.is_a?
+  #     output_array = []
+  #     my_each do |item|
+  #       output_array << item if ( yield item ) == true
+  #     end
+  #     output_array
+  #   elsif self.is_a?(Hash)
+  #     output_hash = Hash.new
+
+
+  #   else
+  #   end
+  # end
 
   def my_all?
     return to_enum(:my_all?) unless block_given?

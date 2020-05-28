@@ -1,39 +1,50 @@
 require_relative 'method.rb'
-
-test_array = (1...5).to_a
+test_range = (1...5)
+test_hash = { "one" => 1, "two" => 2, "three" => 3 }
 test_array_i = (1...5).to_a
 test_array_s = %w[ant bear cat]
 test_array_v = [nil, true, 99]
 test_array_f = [1, 3.14, 42]
 test_array_b = [nil, false, true]
-test_array_h = %w{ant bear cat}
 
 # -----Testing my_each method-----
 
-test_array_i.my_each do |item|
-  puts "my_each #{item}"
+test_array_f.my_each do |item|
+  puts "my_each float #{item}"
+end
+
+test_hash.my_each do |item|
+  puts "my_each hash #{item}"
 end
 
 test_array_s.my_each do |item|
-  puts "my_each #{item}"
+  puts "my_each string #{item}"
+end
+
+test_range.my_each do |item|
+  puts "my_each range #{item}"
 end
 
 # -----Testing my_each_with_index method-----
 
-test_array_f.my_each_with_index do |item, indx|
-  item.to_i << indx % 3
-  puts "my_each_with_index #{item}"
-end
-hash1 = Hash.new
-test_array_s.my_each_with_index do |item, indx|
-  hash1[item] = indx
-end
-puts "my_each_with_index #{hash1}"
+# test_array_f.my_each_with_index do |item, indx|
+#   item.to_i << indx % 3
+#   puts "my_each_with_index #{item}"
+# end
+# hash1 = Hash.new
+# test_array_s.my_each_with_index do |item, indx|
+#   hash1[item] = indx
+# end
+# puts "my_each_with_index #{hash1}"
 
 # -----Testing my_select method-----
 
-x = [1,2,3,4,5].my_select{|a| a.even? }
-puts "my_select result is : #{x} selecting the even values"
+# x = [1,2,3,4,5].my_select{|a| a.even? }
+# puts "my_select result is : #{x} selecting the even values"
+
+# h = { "one" => 1, "two" => 2, "three" => 3 }
+# p h.select{|k,v| v < 2 }
+# h.each{|k,v| p k }
 
 # # -----Testing my_all? method-----
 
