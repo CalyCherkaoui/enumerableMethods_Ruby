@@ -27,15 +27,15 @@ end
 
 # -----Testing my_each_with_index method-----
 
-# test_array_f.my_each_with_index do |item, indx|
-#   item.to_i << indx % 3
-#   puts "my_each_with_index #{item}"
-# end
-# hash1 = Hash.new
-# test_array_s.my_each_with_index do |item, indx|
-#   hash1[item] = indx
-# end
-# puts "my_each_with_index #{hash1}"
+test_array_f.my_each_with_index do |item, indx|
+  item.to_i << indx % 3
+  puts "my_each_with_index #{item}"
+end
+hash1 = Hash.new
+test_array_s.my_each_with_index do |item, indx|
+  hash1[item] = indx
+end
+puts "my_each_with_index #{hash1}"
 
 # -----Testing my_select method-----
 

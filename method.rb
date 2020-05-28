@@ -19,13 +19,20 @@ module Enumerable
 
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
-
+    output_array = []
+    if self.is_a?(Array)
+      output_array = self
+    elsif
+      output_array = self.to_a
+    else
+      output_array << self
+    end
     i = 0
     while i < size
-      yield self[i], i
+        yield output_array[i], i
       i += 1
     end
-    self
+    output_array
   end
 
   # def my_select
