@@ -33,7 +33,7 @@ module Enumerable
     output_array
   end
 
-  def my_all?(parameter = nil)
+  def my_all?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity
     status_cumulator = true
     i = 0
 
@@ -48,7 +48,7 @@ module Enumerable
     status_cumulator
   end
 
-  def my_any?(parameter = nil)
+  def my_any?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity
     status_cumulator = false
     i = 0
     loop do
