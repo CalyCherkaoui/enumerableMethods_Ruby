@@ -97,13 +97,28 @@ module Enumerable
     end
   end
 
-  def my_inject
+  def my_inject(parameter = nil)
     return to_enum(:my_inject) unless block_given?
 
-    cumulator = self[0]
-    i = 1
+    output_array = []
+    if self.is_a?(Array)
+      output_array = self
+    elsif
+      output_array = self.to_a
+    else
+      output_array << self
+    end
+
+    if parameter
+      cumulator = parameter
+      i  = 0
+    else
+      cumulator = output_array[0]
+      i = 1
+    end 
+
     while i < size
-      cumulator = yield cumulator, self[i]
+      cumulator = yield cumulator, output_array[i]
       i += 1
     end
     cumulator
