@@ -39,7 +39,7 @@ puts "my_each_with_index #{hash1}"
 
 # -----Testing my_select method-----
 
-x = test_array_i.my_select{|a| a.even? }
+x = test_array_i.my_select { |a| a.even? }
 puts "my_select result is : #{x} selecting even values"
 
 # # -----Testing my_all? method-----

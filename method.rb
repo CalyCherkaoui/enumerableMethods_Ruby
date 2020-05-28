@@ -1,17 +1,17 @@
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
+
     output_array = []
     if self.is_a?(Array)
       output_array = self
-    elsif
-      output_array = self.to_a
+    elsif output_array = self.to_a
     else
       output_array << self
     end
     i = 0
     while i < size
-        yield output_array[i]
+      yield output_array[i]
       i += 1
     end
     output_array
@@ -19,17 +19,17 @@ module Enumerable
 
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
+
     output_array = []
     if self.is_a?(Array)
       output_array = self
-    elsif
-      output_array = self.to_a
+    elsif output_array = self.to_a
     else
       output_array << self
     end
     i = 0
     while i < size
-        yield output_array[i], i
+      yield output_array[i], i
       i += 1
     end
     output_array
@@ -38,14 +38,14 @@ module Enumerable
   def my_select
     return to_enum(:my_select) unless block_given?
 
-      output_array = []
-      my_each do |item|
-        output_array << item if ( yield item ) == true
-      end
-      output_array
+    output_array = []
+    my_each do |item|
+      output_array << item if (yield item) == true
+    end
+    output_array
   end
 
-  def my_all?( parameter = nil)
+  def my_all?(parameter = nil)
     status_cumulator = true
     i = 0
     if block_given?
@@ -56,14 +56,14 @@ module Enumerable
       end
     elsif parameter
       loop do
-        status_cumulator &&= ( self[i] === parameter)
+        status_cumulator &&= (self[i] === parameter)
         i += 1
         break if i == size || status_cumulator == false
       end
-    else 
+    else
       return to_enum(:my_any?)
     end
-      status_cumulator
+    status_cumulator
   end
 
   def my_any?(parameter = nil)
@@ -77,14 +77,14 @@ module Enumerable
       end
     elsif parameter
       loop do
-        status_cumulator ||= ( self[i] === parameter)
+        status_cumulator ||= (self[i] === parameter)
         i += 1
         break if i == size || status_cumulator == true
       end
     else
       return to_enum(:my_any?)
     end
-      status_cumulator
+    status_cumulator
   end
 
   def my_none?
@@ -103,10 +103,10 @@ module Enumerable
   def my_count(parameter = nil)
     counter = 0
     if parameter
-      my_each {|item| counter += 1 if item === parameter}
+      my_each { |item| counter += 1 if item === parameter }
       counter
     elsif block_given?
-      my_each {|item| counter += 1 if yield item}
+      my_each { |item| counter += 1 if yield item }
       counter
     else
       size
@@ -119,19 +119,18 @@ module Enumerable
     output_array = []
     if self.is_a?(Array)
       output_array = self
-    elsif
-      output_array = self.to_a
+    elsif output_array = self.to_a
     else
       output_array << self
     end
 
     if parameter
       cumulator = parameter
-      i  = 0
+      i = 0
     else
       cumulator = output_array[0]
       i = 1
-    end 
+    end
 
     while i < size
       cumulator = yield cumulator, output_array[i]
