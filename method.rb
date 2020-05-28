@@ -36,20 +36,11 @@ module Enumerable
   def my_all?(parameter = nil)
     status_cumulator = true
     i = 0
-    if block_given?
-      loop do
-        status_cumulator &&= yield self[i]
-        i += 1
-        break if i == size || status_cumulator == false
-      end
-    elsif parameter
-      loop do
-        status_cumulator &&= (self[i] == parameter)
-        i += 1
-        break if i == size || status_cumulator == false
-      end
-    else
-      return to_enum(:my_any?)
+    loop do
+      status_cumulator &&= yield self[i] if block_given?
+      status_cumulator &&= (self[i] == parameter) if parameter
+      i += 1
+      break if i == size || status_cumulator == false
     end
     status_cumulator
   end
@@ -57,35 +48,17 @@ module Enumerable
   def my_any?(parameter = nil)
     status_cumulator = false
     i = 0
-    if block_given?
-      loop do
-        status_cumulator ||= yield self[i]
-        i += 1
-        break if i == size || status_cumulator == true
-      end
-    elsif parameter
-      loop do
-        status_cumulator ||= (self[i] == parameter)
-        i += 1
-        break if i == size || status_cumulator == true
-      end
-    else
-      return to_enum(:my_any?)
+    loop do
+      status_cumulator ||= yield self[i] if block_given?
+      i += 1
+      status_cumulator ||= (self[i] == parameter) if parameter
+      break if i == size || status_cumulator == true
     end
     status_cumulator
   end
 
-  def my_none?
-    return to_enum(:my_none?) unless block_given?
-
-    status_cumulator = true
-    i = 0
-    loop do
-      status_cumulator &&= yield self[i]
-      i += 1
-      break if i == size || status_cumulator == false
-    end
-    !status_cumulator
+  def my_none?(parameter = nil)
+    !my_any?(parameter)
   end
 
   def my_count(parameter = nil)
@@ -118,7 +91,7 @@ module Enumerable
     end
     cumulator
   end
-  
+
   def my_map(&proc)
     output_array = []
     if block_given?
