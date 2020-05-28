@@ -39,7 +39,7 @@ module Enumerable
 
     loop do
       status_cumulator &&= yield self[i] if block_given?
-      status_cumulator &&= ( parameter.match(self[i]) != nil) if parameter.is_a?(Regexp)
+      status_cumulator &&= !parameter.match(self[i]).nil? if parameter.is_a?(Regexp)
       status_cumulator &&= self[i].is_a(parameter) if parameter.is_a?(Class)
       status_cumulator &&= (self[i] == parameter) if parameter
       i += 1
@@ -52,8 +52,8 @@ module Enumerable
     status_cumulator = false
     i = 0
     loop do
-      tatus_cumulator ||= yield self[i] if block_given?
-      status_cumulator ||= ( parameter.match(self[i]) != nil) if parameter.is_a?(Regexp)
+      status_cumulator ||= yield self[i] if block_given?
+      status_cumulator ||= !parameter.match(self[i]).nil? if parameter.is_a?(Regexp)
       status_cumulator ||= self[i].is_a(parameter) if parameter.is_a?(Class)
       status_cumulator ||= (self[i] == parameter) if parameter
       i += 1
