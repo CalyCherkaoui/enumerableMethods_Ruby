@@ -35,22 +35,15 @@ module Enumerable
     output_array
   end
 
-  # def my_select
-  #   return to_enum(:my_select) unless block_given?
+  def my_select
+    return to_enum(:my_select) unless block_given?
 
-  #   if self.is_a?
-  #     output_array = []
-  #     my_each do |item|
-  #       output_array << item if ( yield item ) == true
-  #     end
-  #     output_array
-  #   elsif self.is_a?(Hash)
-  #     output_hash = Hash.new
-
-
-  #   else
-  #   end
-  # end
+      output_array = []
+      my_each do |item|
+        output_array << item if ( yield item ) == true
+      end
+      output_array
+  end
 
   def my_all?
     return to_enum(:my_all?) unless block_given?
