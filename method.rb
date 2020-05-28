@@ -45,30 +45,46 @@ module Enumerable
       output_array
   end
 
-  def my_all?
-    return to_enum(:my_all?) unless block_given?
-
+  def my_all?( parameter = nil)
     status_cumulator = true
     i = 0
-    loop do
-      status_cumulator &&= yield self[i]
-      i += 1
-      break if i == size || status_cumulator == false
+    if block_given?
+      loop do
+        status_cumulator &&= yield self[i]
+        i += 1
+        break if i == size || status_cumulator == false
+      end
+    elsif parameter
+      loop do
+        status_cumulator &&= ( self[i] === parameter)
+        i += 1
+        break if i == size || status_cumulator == false
+      end
+    else 
+      return to_enum(:my_any?)
     end
-    status_cumulator
+      status_cumulator
   end
 
-  def my_any?
-    return to_enum(:my_any?) unless block_given?
-
+  def my_any?(parameter = nil)
     status_cumulator = false
     i = 0
-    loop do
-      status_cumulator ||= yield self[i]
-      i += 1
-      break if i == size || status_cumulator == true
+    if block_given?
+      loop do
+        status_cumulator ||= yield self[i]
+        i += 1
+        break if i == size || status_cumulator == true
+      end
+    elsif parameter
+      loop do
+        status_cumulator ||= ( self[i] === parameter)
+        i += 1
+        break if i == size || status_cumulator == true
+      end
+    else
+      return to_enum(:my_any?)
     end
-    status_cumulator
+      status_cumulator
   end
 
   def my_none?
@@ -87,7 +103,7 @@ module Enumerable
   def my_count(parameter = nil)
     counter = 0
     if parameter
-      my_each {|item| counter += 1 if item == parameter}
+      my_each {|item| counter += 1 if item === parameter}
       counter
     elsif block_given?
       my_each {|item| counter += 1 if yield item}
