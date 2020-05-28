@@ -51,7 +51,7 @@ module Enumerable
     status_cumulator = true
     i = 0
     loop do
-      status_cumulator &&= yield i
+      status_cumulator &&= yield self[i]
       i += 1
       break if i == size || status_cumulator == false
     end

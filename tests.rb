@@ -44,10 +44,8 @@ test_array_b = [nil, false, true]
 
 # # -----Testing my_all? method-----
 
-# x = test_array.my_all? do |indx|
-#   test_array[indx] > 20
-# end
-# puts "my_all result is : #{x}"
+x = test_array_s.my_all? { |word| word.length >= 3 }
+puts "my_all result is : #{x}"
 
 # # -----Testing my_any? method-----
 
