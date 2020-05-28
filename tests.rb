@@ -1,11 +1,9 @@
 require_relative 'method.rb'
 test_range = (5..10)
-test_hash = { "one" => 1, "two" => 2, "three" => 3 }
+test_hash = { 'one' => 1, 'two' => 2, 'three' => 3 }
 test_array_i = (1...5).to_a
 test_array_s = %w[ant bear cat]
-test_array_v = [nil, true, 99]
 test_array_f = [1, 3.14, 42]
-test_array_b = [nil, false, true]
 
 # # -----Testing my_each method-----
 
@@ -31,7 +29,7 @@ test_array_f.my_each_with_index do |item, indx|
   item.to_i << indx % 3
   puts "my_each_with_index #{item}"
 end
-hash1 = Hash.new
+hash1 = {}
 test_array_s.my_each_with_index do |item, indx|
   hash1[item] = indx
 end
@@ -39,7 +37,7 @@ puts "my_each_with_index #{hash1}"
 
 # -----Testing my_select method-----
 
-x = test_array_i.my_select { |a| a.even? }
+x = test_array_i.my_select { |a| (a % 2).zero? }
 puts "my_select result is : #{x} selecting even values"
 
 # # -----Testing my_all? method-----

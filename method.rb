@@ -2,13 +2,7 @@ module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
 
-    output_array = []
-    if self.is_a?(Array)
-      output_array = self
-    elsif output_array = self.to_a
-    else
-      output_array << self
-    end
+    output_array = is_a?(Array) ? self : to_a
     i = 0
     while i < size
       yield output_array[i]
@@ -20,13 +14,7 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
 
-    output_array = []
-    if self.is_a?(Array)
-      output_array = self
-    elsif output_array = self.to_a
-    else
-      output_array << self
-    end
+    output_array = is_a?(Array) ? self : to_a
     i = 0
     while i < size
       yield output_array[i], i
@@ -56,7 +44,7 @@ module Enumerable
       end
     elsif parameter
       loop do
-        status_cumulator &&= (self[i] === parameter)
+        status_cumulator &&= (self[i] == parameter)
         i += 1
         break if i == size || status_cumulator == false
       end
@@ -77,7 +65,7 @@ module Enumerable
       end
     elsif parameter
       loop do
-        status_cumulator ||= (self[i] === parameter)
+        status_cumulator ||= (self[i] == parameter)
         i += 1
         break if i == size || status_cumulator == true
       end
@@ -103,7 +91,7 @@ module Enumerable
   def my_count(parameter = nil)
     counter = 0
     if parameter
-      my_each { |item| counter += 1 if item === parameter }
+      my_each { |item| counter += 1 if item == parameter }
       counter
     elsif block_given?
       my_each { |item| counter += 1 if yield item }
@@ -116,14 +104,7 @@ module Enumerable
   def my_inject(parameter = nil)
     return to_enum(:my_inject) unless block_given?
 
-    output_array = []
-    if self.is_a?(Array)
-      output_array = self
-    elsif output_array = self.to_a
-    else
-      output_array << self
-    end
-
+    output_array = is_a?(Array) ? self : to_a
     if parameter
       cumulator = parameter
       i = 0
@@ -131,14 +112,13 @@ module Enumerable
       cumulator = output_array[0]
       i = 1
     end
-
     while i < size
       cumulator = yield cumulator, output_array[i]
       i += 1
     end
     cumulator
   end
-
+  
   def my_map(&proc)
     output_array = []
     if block_given?
