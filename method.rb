@@ -36,33 +36,89 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   def my_all?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     status_cumulator = true
     i = 0
-    loop do
-      if block_given?
-        status_cumulator &&= yield self[i]
-      elsif parameter.is_a?(Regexp)
-        status_cumulator &&= !parameter.match(self[i]).nil?
-      elsif parameter.is_a?(Class)
-        status_cumulator &&= self[i].is_a?(parameter)
-      elsif parameter
-        status_cumulator &&= (self[i] == parameter)
+    if block_given?
+      case parameter
+      when nil
+        loop do
+          status_cumulator &&= yield self[i]
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
+      when parameter.is_a?(Regexp)
+        puts "warning: given block not used"
+        loop do
+          status_cumulator &&= !parameter.match(self[i]).nil?
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
+      when parameter.is_a?(Class)
+        puts "warning: given block not used"
+        loop do
+          status_cumulator &&= self[i].is_a?(parameter)
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
       else
-        status_cumulator = false
+        puts "warning: given block not used"
+        loop do
+          status_cumulator &&= (self[i] == parameter)
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
       end
-      i += 1
-      break if i == size || status_cumulator == false
+    else
+      case parameter
+      when nil
+        loop do
+          status_cumulator &&= !self[i].nil?
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
+      when parameter.is_a?(Regexp)
+        loop do
+          status_cumulator &&= !parameter.match(self[i]).nil?
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
+      when parameter.is_a?(Class)
+        loop do
+          status_cumulator &&= self[i].is_a?(parameter)
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
+      else
+        loop do
+          status_cumulator &&= (self[i] == parameter)
+          i += 1
+          break if i == size || status_cumulator == false
+        end
+        return status_cumulator
+      end
     end
-
-    status_cumulator
   end
 
-  def my_any?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity
+  def my_any?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     status_cumulator = false
     i = 0
     loop do
-      status_cumulator ||= yield self[i] if block_given?
-      status_cumulator ||= !parameter.match(self[i]).nil? if parameter.is_a?(Regexp)
-      status_cumulator ||= self[i].is_a(parameter) if parameter.is_a?(Class)
-      status_cumulator ||= (self[i] == parameter) if parameter
+      if block_given?
+        status_cumulator ||= yield self[i]
+      elsif parameter.is_a?(Regexp)
+        status_cumulator ||= !parameter.match(self[i]).nil?
+      elsif parameter.is_a?(Class)
+        status_cumulator ||= self[i].is_a?(parameter)
+      elsif parameter
+        status_cumulator ||= (self[i] == parameter)
+      else
+        status_cumulator = true
+      end
       i += 1
       break if i == size || status_cumulator == true
     end
