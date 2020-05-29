@@ -35,5 +35,5 @@ puts "my_all result is : #{x}"
 
 puts " F ************"
 
-p [1].my_all?
-p [1].all?
+p [1, 2].my_all?
+p [1, 3].all?
