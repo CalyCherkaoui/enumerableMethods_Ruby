@@ -206,3 +206,13 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     output_array
   end
 end
+
+# -----Testing my_inject method with multiply_els method---
+test_array_i = (1...5).to_a
+def multiply_els(array)
+  array.my_inject do |m, n|
+    (m * n)
+  end
+end
+x = multiply_els(test_array_i)
+puts "Testing my_inject method with multiply_els method. The result is : #{x}"
