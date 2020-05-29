@@ -1,4 +1,4 @@
-module Enumerable
+module Enumerable # rubocop:disable Metrics/ModuleLength
   def my_each
     return to_enum(:my_each) unless block_given?
 
@@ -33,18 +33,25 @@ module Enumerable
     output_array
   end
 
-  def my_all?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity
+  def my_all?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     status_cumulator = true
     i = 0
-
     loop do
-      status_cumulator &&= yield self[i] if block_given?
-      status_cumulator &&= !parameter.match(self[i]).nil? if parameter.is_a?(Regexp)
-      status_cumulator &&= self[i].is_a(parameter) if parameter.is_a?(Class)
-      status_cumulator &&= (self[i] == parameter) if parameter
+      if block_given?
+        status_cumulator &&= yield self[i]
+      elsif parameter.is_a?(Regexp)
+        status_cumulator &&= !parameter.match(self[i]).nil?
+      elsif parameter.is_a?(Class)
+        status_cumulator &&= self[i].is_a?(parameter)
+      elsif parameter
+        status_cumulator &&= (self[i] == parameter)
+      else
+        status_cumulator = false
+      end
       i += 1
       break if i == size || status_cumulator == false
     end
+
     status_cumulator
   end
 
