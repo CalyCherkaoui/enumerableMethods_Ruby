@@ -33,65 +33,65 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     output_array
   end
 
+  def parameter_condition?(parameter)
+    parameter.is_a?(Regexp) || parameter.is_a?(Class) || parameter.nil?
+  end
+
   def my_all?(parameter = nil) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
     status_cumulator = true
     i = 0
     bg = block_given?
-    if bg == true
-      if parameter.nil?
-        loop do
-          status_cumulator &&= yield self[i]
-          i += 1
-          break if i == size || status_cumulator == false
-        end
-      elsif parameter.is_a?(Regexp)
-        puts 'warning: given block not used'
-        loop do
-          status_cumulator &&= !parameter.match(self[i]).nil?
-          i += 1
-          break if i == size || status_cumulator == false
-        end
-      elsif parameter.is_a?(Class)
-        puts 'warning: given block not used'
-        loop do
-          status_cumulator &&= self[i].is_a?(parameter)
-          i += 1
-          break if i == size || status_cumulator == false
-        end
-      else
-        puts 'warning: given block not used'
-        loop do
-          status_cumulator &&= (self[i] == parameter)
-          i += 1
-          break if i == size || status_cumulator == false
-        end
+    if bg == true && parameter.nil?
+      loop do
+        status_cumulator &&= yield self[i]
+        i += 1
+        break if i == size || status_cumulator == false
+      end
+    elsif bg == true && parameter.is_a?(Regexp)
+      puts 'warning: given block not used'
+      loop do
+        status_cumulator &&= !parameter.match(self[i]).nil?
+        i += 1
+        break if i == size || status_cumulator == false
+      end
+    elsif bg == true && parameter.is_a?(Class)
+      puts 'warning: given block not used'
+      loop do
+        status_cumulator &&= self[i].is_a?(parameter)
+        i += 1
+        break if i == size || status_cumulator == false
+      end
+    elsif bg == true && parameter_condition?(parameter)
+      puts 'warning: given block not used'
+      loop do
+        status_cumulator &&= (self[i] == parameter)
+        i += 1
+        break if i == size || status_cumulator == false
+      end
+    elsif bg == false && parameter.nil?
+      loop do
+        break if i == size || status_cumulator == false
+
+        status_cumulator &&= !self[i].nil?
+        i += 1
+      end
+    elsif bg == false && parameter.is_a?(Regexp)
+      loop do
+        status_cumulator &&= !parameter.match(self[i]).nil?
+        i += 1
+        break if i == size || status_cumulator == false
+      end
+    elsif bg == false && parameter.is_a?(Class)
+      loop do
+        status_cumulator &&= self[i].is_a?(parameter)
+        i += 1
+        break if i == size || status_cumulator == false
       end
     else
-      if parameter.nil?
-        loop do
-          break if i == size || status_cumulator == false
-
-          status_cumulator &&= !self[i].nil?
-          i += 1
-        end
-      elsif parameter.is_a?(Regexp)
-        loop do
-          status_cumulator &&= !parameter.match(self[i]).nil?
-          i += 1
-          break if i == size || status_cumulator == false
-        end
-      elsif parameter.is_a?(Class)
-        loop do
-          status_cumulator &&= self[i].is_a?(parameter)
-          i += 1
-          break if i == size || status_cumulator == false
-        end
-      else
-        loop do
-          status_cumulator &&= (self[i] == parameter)
-          i += 1
-          break if i == size || status_cumulator == false
-        end
+      loop do
+        status_cumulator &&= (self[i] == parameter)
+        i += 1
+        break if i == size || status_cumulator == false
       end
     end
     status_cumulator
@@ -101,61 +101,57 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     status_cumulator = false
     i = 0
     bg = block_given?
-    if bg == true
-      if parameter.nil?
-        loop do
-          status_cumulator ||= yield self[i]
-          i += 1
-          break if i == size || status_cumulator == true
-        end
-      elsif parameter.is_a?(Regexp)
-        puts 'warning: given block not used'
-        loop do
-          status_cumulator ||= !parameter.match(self[i]).nil?
-          i += 1
-          break if i == size || status_cumulator == true
-        end
-      elsif parameter.is_a?(Class)
-        puts 'warning: given block not used'
-        loop do
-          status_cumulator ||= self[i].is_a?(parameter)
-          i += 1
-          break if i == size || status_cumulator == true
-        end
-      else
-        puts 'warning: given block not used'
-        loop do
-          status_cumulator ||= (self[i] == parameter)
-          i += 1
-          break if i == size || status_cumulator == true
-        end
+    if bg == true && parameter.nil?
+      loop do
+        status_cumulator ||= yield self[i]
+        i += 1
+        break if i == size || status_cumulator == true
+      end
+    elsif bg == true && parameter.is_a?(Regexp)
+      puts 'warning: given block not used'
+      loop do
+        status_cumulator ||= !parameter.match(self[i]).nil?
+        i += 1
+        break if i == size || status_cumulator == true
+      end
+    elsif bg == true && parameter.is_a?(Class)
+      puts 'warning: given block not used'
+      loop do
+        status_cumulator ||= self[i].is_a?(parameter)
+        i += 1
+        break if i == size || status_cumulator == true
+      end
+    elsif bg == true && parameter_condition?(parameter)
+      puts 'warning: given block not used'
+      loop do
+        status_cumulator ||= (self[i] == parameter)
+        i += 1
+        break if i == size || status_cumulator == true
+      end
+    elsif bg == false && parameter.nil?
+      loop do
+        break if i == size || status_cumulator == true
+
+        status_cumulator ||= !self[i].nil?
+        i += 1
+      end
+    elsif bg == false && parameter.is_a?(Regexp)
+      loop do
+        status_cumulator ||= !parameter.match(self[i]).nil?
+        i += 1
+        break if i == size || status_cumulator == true
+      end
+    elsif bg == false && parameter.is_a?(Class)
+      loop do
+        status_cumulator ||= self[i].is_a?(parameter)
+        i += 1
+        break if i == size || status_cumulator == true
       end
     else
-      if parameter.nil?
-        loop do
-          break if i == size || status_cumulator == true
-
-          status_cumulator ||= !self[i].nil?
-          i += 1
-        end
-      elsif parameter.is_a?(Regexp)
-        loop do
-          status_cumulator ||= !parameter.match(self[i]).nil?
-          i += 1
-          break if i == size || status_cumulator == true
-        end
-      elsif parameter.is_a?(Class)
-        loop do
-          status_cumulator ||= self[i].is_a?(parameter)
-          i += 1
-          break if i == size || status_cumulator == true
-        end
-      else
-        loop do
-          status_cumulator ||= (self[i] == parameter)
-          i += 1
-          break if i == size || status_cumulator == true
-        end
+      loop do
+        status_cumulator ||= (self[i] == parameter)
+        i += 1
+        break if i == size || status_cumulator == true
       end
     end
     status_cumulator
