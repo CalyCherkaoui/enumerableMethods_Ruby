@@ -157,7 +157,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     status_cumulator
   end
 
-  def my_none?(parameter = nil)
+  def my_none?(parameter = nil, &block)
     !my_any?(parameter)
   end
 
@@ -193,14 +193,16 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   def my_map(&proc)
+    return to_enum(:my_map) unless block_given?
+
     output_array = []
-    if block_given?
+    if proc
       my_each do |elem|
-        output_array << (yield elem)
+        output_array << proc.call(elem)
       end
     else
       my_each do |elem|
-        output_array << proc.call(elem)
+      output_array << (yield elem)
       end
     end
     output_array
@@ -216,3 +218,12 @@ def multiply_els(array)
 end
 x = multiply_els(test_array_i)
 puts "Testing my_inject method with multiply_els method. The result is : #{x}"
+
+test_array_x = (1...5).to_a
+def multiply_els(array)
+  array.inject do |m, n|
+    (m * n)
+  end
+end
+x = multiply_els(test_array_x)
+puts "Testing inject method with multiply_els method. The result is : #{x}"
