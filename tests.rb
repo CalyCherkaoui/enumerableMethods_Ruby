@@ -74,7 +74,7 @@ end
 x = multiply_els(test_array_i)
 puts "Testing my_inject method with multiply_els method. The result is : #{x}"
 
-puts '-----Testing my_map method-----'
+puts 'just block-----Testing my_map method-----'
 x = test_array_i.my_map do |item|
   (item * 10)
 end
@@ -84,18 +84,29 @@ x = test_array_i.map do |item|
   (item * 10)
 end
 puts "map with block result is : #{x}"
-
+puts 'just proc ----------'
 test_proc = proc { |item| item * 10 }
 x = test_array_i.my_map(&test_proc)
 puts "my_map with proc result is : #{x}"
-
 test_proc = proc { |item| item * 10 }
 x = test_array_i.map(&test_proc)
 puts "map with proc result is : #{x}"
 
-puts '-----Testing my_map method-----'
+puts '------'
 
 x = test_array_i.my_map
 puts "my_map without any block nor proc result is : #{x}"
 x = test_array_i.map
 puts "map without any block nor proc result is : #{x}"
+
+puts '------'
+
+# x = test_array_i.my_map(&test_proc) do |item|
+#   (item * 10)
+# end
+# puts "my_map with block result is : #{x}"
+
+# x = test_array_i.map(&test_proc) do |item|
+#   (item * 10)
+# end
+# puts "map with block result is : #{x}"

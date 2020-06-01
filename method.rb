@@ -192,38 +192,39 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     cumulator
   end
 
-  def my_map(&proc)
+  def my_map (&proc)
     return to_enum(:my_map) unless block_given?
 
     output_array = []
-    if proc
+    if proc.is_a?(Proc)
       my_each do |elem|
         output_array << proc.call(elem)
       end
-    else
+    else 
       my_each do |elem|
-      output_array << (yield elem)
+        output_array << (yield elem)
       end
     end
     output_array
   end
+
 end
 
-# -----Testing my_inject method with multiply_els method---
-test_array_i = (1...5).to_a
-def multiply_els(array)
-  array.my_inject do |m, n|
-    (m * n)
-  end
-end
-x = multiply_els(test_array_i)
-puts "Testing my_inject method with multiply_els method. The result is : #{x}"
+# # -----Testing my_inject method with multiply_els method---
+# test_array_i = (1...5).to_a
+# def multiply_els(array)
+#   array.my_inject do |m, n|
+#     (m * n)
+#   end
+# end
+# x = multiply_els(test_array_i)
+# puts "Testing my_inject method with multiply_els method. The result is : #{x}"
 
-test_array_x = (1...5).to_a
-def multiply_els(array)
-  array.inject do |m, n|
-    (m * n)
-  end
-end
-x = multiply_els(test_array_x)
-puts "Testing inject method with multiply_els method. The result is : #{x}"
+# test_array_x = (1...5).to_a
+# def multiply_els(array)
+#   array.inject do |m, n|
+#     (m * n)
+#   end
+# end
+# x = multiply_els(test_array_x)
+# puts "Testing inject method with multiply_els method. The result is : #{x}"
