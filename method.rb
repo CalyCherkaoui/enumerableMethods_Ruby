@@ -192,18 +192,22 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     cumulator
   end
 
-  def my_map (&proc)
-    return to_enum(:my_map) unless block_given?
-
+  def my_map (my_proc = nil)
     output_array = []
-    if proc.is_a?(Proc)
+    if my_proc.is_a?(Proc)
+      puts "proc"
       my_each do |elem|
-        output_array << proc.call(elem)
+        output_array << my_proc.call(elem)
       end
-    else 
+    elsif !my_proc.is_a?(Proc) && !block_given?
+      return to_enum(:my_map)
+    elsif !my_proc.is_a?(Proc) && block_given?
+      puts "block"
       my_each do |elem|
         output_array << (yield elem)
       end
+    else
+      puts "warning arguments : wrong"
     end
     output_array
   end
