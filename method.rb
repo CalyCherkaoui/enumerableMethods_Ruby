@@ -157,8 +157,8 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     status_cumulator
   end
 
-  def my_none?(parameter = nil , &b)
-    !my_any?(parameter, &b)
+  def my_none?(parameter = nil, &my_block)
+    !my_any?(parameter, &my_block)
   end
 
   def my_count(parameter = nil)
@@ -174,8 +174,9 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     end
   end
 
-  def my_inject(*parameter)
-    return "wrong number of arguments" unless parameter.size <= 2
+  def my_inject(*parameter) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
+    return 'wrong number of arguments' unless parameter.size <= 2
+
     output_array = is_a?(Array) ? self : to_a
     my_symbol = nil
     my_initial = nil
@@ -187,59 +188,56 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    if my_symbol != nil && my_initial != nil
+    if !my_symbol.nil? && !my_initial.nil?
       cumulator = my_initial
-      self.each do |elem|
+      each do |elem|
         cumulator = cumulator.send(my_symbol, elem)
       end
-    elsif my_symbol != nil && my_initial == nil
+    elsif !my_symbol.nil? && my_initial.nil?
       cumulator = output_array[0]
       i = 1
-      while i < self.size
+      while i < size
         cumulator = cumulator.send(my_symbol, self[i])
         i += 1
       end
-    elsif my_symbol == nil && my_initial != nil && block_given?
+    elsif my_symbol.nil? && !my_initial.nil? && block_given?
       cumulator = my_initial
-      self.each do |elem|
+      each do |elem|
         cumulator = yield cumulator, elem
       end
-    elsif my_symbol == nil && my_initial != nil && !block_given?
+    elsif my_symbol.nil? && !my_initial.nil? && !block_given?
       return "error #{my_initial} not a symbol and no block is given"
-    elsif my_symbol == nil && my_initial == nil && block_given?
+    elsif my_symbol.nil? && my_initial.nil? && block_given?
       cumulator = output_array[0]
       i = 1
-      while i < self.size
+      while i < size
         cumulator = yield cumulator, self[i]
         i += 1
       end
-    else my_symbol == nil && my_initial == nil && !block_given?
-      return to_enum(:my_inject)
+    else my_symbol.nil? && my_initial.nil? && !block_given?
+         return to_enum(:my_inject)
     end
 
     cumulator
   end
 
-  def my_map (my_proc = nil)
+  def my_map(my_proc = nil)
     output_array = []
     if my_proc.is_a?(Proc)
-      puts "proc"
       my_each do |elem|
         output_array << my_proc.call(elem)
       end
     elsif !my_proc.is_a?(Proc) && !block_given?
       return to_enum(:my_map)
     elsif !my_proc.is_a?(Proc) && block_given?
-      puts "block"
       my_each do |elem|
         output_array << (yield elem)
       end
     else
-      puts "warning arguments : wrong"
+      puts 'warning arguments : wrong'
     end
     output_array
   end
-
 end
 
 # -----Testing my_inject method with multiply_els method---

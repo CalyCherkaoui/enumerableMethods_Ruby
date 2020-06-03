@@ -20,13 +20,13 @@ p test_array_s.inject('w', :+)
 
 puts 'inject symbol , init , block ________'
 
-p test_array_i.my_inject(2, :+) {|x , y| x * y}
-p test_array_i.inject(2, :+) {|x , y| x * y}
+p test_array_i.my_inject(2, :+) { |x, y| x * y }
+p test_array_i.inject(2, :+) { |x, y| x * y }
 
 puts 'inject no symbol , init , block ________'
 
-p test_array_i.my_inject(2) {|x , y| x * y}
-p test_array_i.inject(2) {|x , y| x * y}
+p test_array_i.my_inject(2) { |x, y| x * y }
+p test_array_i.inject(2) { |x, y| x * y }
 
 puts 'inject no symbol , no init , no block ________'
 
@@ -40,5 +40,7 @@ p test_array_i.my_inject(2)
 
 puts 'inject no symbol , no init , block ________'
 
-p test_array_i.my_inject {|x , y| x * y}
-p test_array_i.inject {|x , y| x * y}
+a = test_array_i.my_inject { |x, y| x * y }
+p a
+b = test_array_i.inject { |x, y| x * y }
+p b
