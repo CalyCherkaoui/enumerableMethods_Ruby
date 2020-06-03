@@ -157,8 +157,8 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     status_cumulator
   end
 
-  def my_none?(parameter = nil, &block)
-    !my_any?(parameter)
+  def my_none?(parameter = nil , &b)
+    !my_any?(parameter, &b)
   end
 
   def my_count(parameter = nil)
@@ -174,22 +174,65 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     end
   end
 
-  def my_inject(parameter = nil)
-    return to_enum(:my_inject) unless block_given?
-
+  def my_inject(*parameter)
+    return "wrong number of arguments" unless parameter.size <= 2
     output_array = is_a?(Array) ? self : to_a
-    if parameter
-      cumulator = parameter
-      i = 0
-    else
+    my_symbol = nil
+    my_initial = nil
+    parameter.each do |elem|
+      if elem.is_a?(Symbol)
+        my_symbol = elem
+      else
+        my_initial = elem
+      end
+    end
+
+    if my_symbol != nil && my_initial != nil
+      cumulator = my_initial
+      self.each do |elem|
+        cumulator = cumulator.send(my_symbol, elem)
+      end
+    elsif my_symbol != nil && my_initial == nil
       cumulator = output_array[0]
       i = 1
+      while i < self.size
+        cumulator = cumulator.send(my_symbol, self[i])
+        i += 1
+      end
+    elsif my_symbol == nil && my_initial != nil && block_given?
+      cumulator = my_initial
+      self.each do |elem|
+        cumulator = yield cumulator, elem
+      end
+    elsif my_symbol == nil && my_initial != nil && !block_given?
+      return 'error argument not a symbol and no block is given'
+    elsif my_symbol == nil && my_initial == nil && block_given?
+      cumulator = output_array[0]
+      i = 1
+      while i < self.size
+        cumulator = yield cumulator, self[i]
+        i += 1
+      end
+    else my_symbol == nil && my_initial == nil && !block_given?
+      return to_enum(:my_inject)
     end
-    while i < size
-      cumulator = yield cumulator, output_array[i]
-      i += 1
-    end
+
     cumulator
+
+
+    # output_array = is_a?(Array) ? self : to_a
+    # if parameter
+    #   cumulator = parameter
+    #   i = 0
+    # else
+    #   cumulator = output_array[0]
+    #   i = 1
+    # end
+    # while i < size
+    #   cumulator = yield cumulator, output_array[i]
+    #   i += 1
+    # end
+    # cumulator
   end
 
   def my_map (my_proc = nil)
