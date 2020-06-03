@@ -205,7 +205,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         cumulator = yield cumulator, elem
       end
     elsif my_symbol == nil && my_initial != nil && !block_given?
-      return 'error argument not a symbol and no block is given'
+      return "error #{my_initial} not a symbol and no block is given"
     elsif my_symbol == nil && my_initial == nil && block_given?
       cumulator = output_array[0]
       i = 1
@@ -218,21 +218,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     end
 
     cumulator
-
-
-    # output_array = is_a?(Array) ? self : to_a
-    # if parameter
-    #   cumulator = parameter
-    #   i = 0
-    # else
-    #   cumulator = output_array[0]
-    #   i = 1
-    # end
-    # while i < size
-    #   cumulator = yield cumulator, output_array[i]
-    #   i += 1
-    # end
-    # cumulator
   end
 
   def my_map (my_proc = nil)
@@ -257,21 +242,9 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
 
 end
 
-# # -----Testing my_inject method with multiply_els method---
-# test_array_i = (1...5).to_a
-# def multiply_els(array)
-#   array.my_inject do |m, n|
-#     (m * n)
-#   end
-# end
-# x = multiply_els(test_array_i)
-# puts "Testing my_inject method with multiply_els method. The result is : #{x}"
-
-# test_array_x = (1...5).to_a
-# def multiply_els(array)
-#   array.inject do |m, n|
-#     (m * n)
-#   end
-# end
-# x = multiply_els(test_array_x)
-# puts "Testing inject method with multiply_els method. The result is : #{x}"
+# -----Testing my_inject method with multiply_els method---
+def multiply_els(array)
+  array.my_inject do |m, n|
+    (m * n)
+  end
+end
