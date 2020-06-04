@@ -52,7 +52,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     i = 0
     bg = block_given?
     if parameter.empty? && bg == true
-      puts 'block given, no param given'
       loop do
         break if i == size || status_cumulator == false
 
@@ -60,7 +59,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter.empty? && bg == false
-      puts 'no block given, no param given'
       loop do
         break if i == size || status_cumulator == false
 
@@ -68,7 +66,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Regexp) && bg == true && !parameter.empty?
-      puts 'block given, param regex'
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == false
@@ -77,7 +74,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Regexp) && bg == false && !parameter.empty?
-      puts 'no block given, param regex'
       loop do
         break if i == size || status_cumulator == false
 
@@ -85,7 +81,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Class) && bg == true && !parameter.empty?
-      puts 'block, param class'
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == false
@@ -94,7 +89,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Class) && bg == false && !parameter.empty?
-      puts 'no block, param class'
       loop do
         break if i == size || status_cumulator == false
 
@@ -102,7 +96,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif !parameter_condition?(parameter[0]) && bg == true && !parameter.empty?
-      puts 'block, param'
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == false
@@ -111,7 +104,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif !parameter_condition?(parameter[0]) && bg == false && !parameter.empty?
-      puts 'no block, param'
       loop do
         break if i == size || status_cumulator == false
 
@@ -138,7 +130,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter.empty? && bg == false
-      puts 'no block given, no param given'
       loop do
         break if i == size || status_cumulator == true
 
@@ -146,7 +137,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Regexp) && bg == true && !parameter.empty?
-      puts 'block given, param regex'
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == true
@@ -155,7 +145,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Regexp) && bg == false && !parameter.empty?
-      puts 'no block given, param regex'
       loop do
         break if i == size || status_cumulator == true
 
@@ -163,7 +152,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Class) && bg == true && !parameter.empty?
-      puts 'block, param class'
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == true
@@ -172,7 +160,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif parameter[0].is_a?(Class) && bg == false && !parameter.empty?
-      puts 'no block, param class'
       loop do
         break if i == size || status_cumulator == true
 
@@ -180,7 +167,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif !parameter_condition?(parameter[0]) && bg == true && !parameter.empty?
-      puts 'block, param'
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == true
@@ -189,7 +175,6 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         i += 1
       end
     elsif !parameter_condition?(parameter[0]) && bg == false && !parameter.empty?
-      puts 'no block, param'
       loop do
         break if i == size || status_cumulator == true
 
