@@ -37,6 +37,14 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     parameter.is_a?(Regexp) || parameter.is_a?(Class)
   end
 
+  def to_boolean (parameter)
+    if parameter == false || parameter.nil?
+      false
+    else
+      true
+    end
+  end
+
   def my_all?(*parameter) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
     return 'wrong number of arguments' unless parameter.size <= 1
     status_cumulator = true
@@ -53,7 +61,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
       puts 'no block given, no param given'
       loop do
         break if i == size || status_cumulator == false
-        status_cumulator &&= (self[i] == true || !self[i].nil?)
+        status_cumulator &&= to_boolean(self[i])
         i += 1
       end
     elsif parameter[0].is_a?(Regexp) && bg == true && !parameter.empty?
@@ -71,7 +79,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         status_cumulator &&= !parameter[0].match(self[i]).nil?
         i += 1
       end
-    elsif parameter[0].is_a?(Class) && bg == true !parameter.empty?
+    elsif parameter[0].is_a?(Class) && bg == true && !parameter.empty?
       puts 'block, param class'
       puts 'warning: given block not used'
       loop do
@@ -86,7 +94,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         status_cumulator &&= self[i].is_a?(parameter[0])
         i += 1
       end
-    elsif parameter_condition?(parameter[0]) && bg == true && !parameter.empty?
+    elsif !parameter_condition?(parameter[0]) && bg == true && !parameter.empty?
       puts 'block, param'
       puts 'warning: given block not used'
       loop do
@@ -94,8 +102,8 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         status_cumulator &&= (self[i] == parameter)
         i += 1
       end
-    elsif parameter_condition?(parameter[0]) && bg == false && !parameter.empty?
-      puts 'block, param'
+    elsif !parameter_condition?(parameter[0]) && bg == false && !parameter.empty?
+      puts 'no block, param'
       loop do
         break if i == size || status_cumulator == false
         status_cumulator &&= (self[i] == parameter)

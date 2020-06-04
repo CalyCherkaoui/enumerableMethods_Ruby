@@ -35,5 +35,5 @@ puts "my_all result is : #{x}"
 
 puts ' F ************'
 
-p [true, 2].my_all?(true)
-p [true, 3].all?(true)
+p [true, false].my_all?
+p [true, false].all?
