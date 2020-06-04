@@ -23,7 +23,7 @@ x = test_array_s.my_any? { |word| word.length >= 3 }
 puts "my_any result is : #{x}"
 
 x = test_array_s.any? { |word| word.length >= 3 }
-puts "my_any result is : #{x}"
+puts "any result is : #{x}"
 
 puts ' E ************'
 
