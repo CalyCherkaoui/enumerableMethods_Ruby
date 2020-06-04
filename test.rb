@@ -5,8 +5,8 @@ p [1, 2i, 3.14].my_all?(Numeric)
 p [1, 2i, 3.14].all?(Numeric)
 
 puts ' A *************'
-p [nil, true, 99].my_all?
-p [nil, true, 99].all?
+p [true, true, 99].my_all?
+p [true, true, 99].all?
 
 puts ' B ************'
 p [].my_all?
@@ -35,5 +35,5 @@ puts "my_all result is : #{x}"
 
 puts ' F ************'
 
-p [1, 2].my_all?
-p [1, 3].all?
+p [true, 2].my_all?(true)
+p [true, 3].all?(true)

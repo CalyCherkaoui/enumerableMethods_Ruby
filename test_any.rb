@@ -5,8 +5,8 @@ p [1, 2i, 3.14].my_any?(Numeric)
 p [1, 2i, 3.14].any?(Numeric)
 
 puts ' A *************'
-p [nil, true, 99].my_any?
-p [nil, true, 99].any?
+p [nil, true, '', nil].my_any?
+p [nil, true, '', nil].any?
 
 puts ' B ************'
 p [].my_any?
