@@ -115,7 +115,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
       loop do
         break if i == size || status_cumulator == false
 
-        status_cumulator &&= (self[i] == parameter)
+        status_cumulator &&= (self[i] == parameter[0])
         i += 1
       end
     end
@@ -193,7 +193,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
       loop do
         break if i == size || status_cumulator == true
 
-        status_cumulator ||= (self[i] == parameter)
+        status_cumulator ||= (self[i] == parameter[0])
         i += 1
       end
     end

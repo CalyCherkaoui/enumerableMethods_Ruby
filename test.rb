@@ -45,5 +45,10 @@ p [nil].all?
 
 puts ' h ************'
 
-p [2].my_all?(false)
-p [2].all?(false)
+p [2].my_all?(true)
+p [2].all?(true)
+
+puts ' i ************'
+
+p [2, 2].my_all?(2)
+p [2, 2].all?(2)

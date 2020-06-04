@@ -35,5 +35,8 @@ puts "my_any result is : #{x}"
 
 puts ' F ************'
 
-p [1, 2].my_any?
-p [1, 3].any?
+p [1, 2].my_any?(true)
+p [1, 3].any?(true)
+
+p [1, 2].my_any?(2)
+p [1, 2].any?(2)
