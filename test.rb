@@ -14,8 +14,14 @@ p [].all?
 
 puts ' C ************'
 
-p %w[ant bear cat].my_all?(/a/)
-p %w[ant bear cat].all?(/a/)
+p %w[ant bear cat].my_all?(/t/)
+p %w[ant bear cat].all?(/t/)
+
+puts ' C ************'
+x = %w[ant bear cat].my_all?(/a/) { |word| word.length >= 3 }
+p x
+x = %w[ant bear cat].all?(/a/) { |word| word.length >= 3 }
+p x
 
 puts ' D ************'
 
