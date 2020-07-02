@@ -65,7 +65,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         status_cumulator &&= to_boolean(self[i])
         i += 1
       end
-    elsif parameter[0].is_a?(Regexp) && bg == true && !parameter.empty?
+    elsif parameter[0].is_a?(Regexp) && bg == true
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == false
@@ -73,14 +73,14 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         status_cumulator &&= !parameter[0].match(self[i]).nil?
         i += 1
       end
-    elsif parameter[0].is_a?(Regexp) && bg == false && !parameter.empty?
+    elsif parameter[0].is_a?(Regexp) && bg == false
       loop do
         break if i == size || status_cumulator == false
 
         status_cumulator &&= !parameter[0].match(self[i]).nil?
         i += 1
       end
-    elsif parameter[0].is_a?(Class) && bg == true && !parameter.empty?
+    elsif parameter[0].is_a?(Class) && bg == true
       puts 'warning: given block not used'
       loop do
         break if i == size || status_cumulator == false
@@ -88,7 +88,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         status_cumulator &&= self[i].is_a?(parameter[0])
         i += 1
       end
-    elsif parameter[0].is_a?(Class) && bg == false && !parameter.empty?
+    elsif parameter[0].is_a?(Class) && bg == false
       loop do
         break if i == size || status_cumulator == false
 
